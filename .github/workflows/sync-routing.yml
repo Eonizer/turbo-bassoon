@@ -2,8 +2,8 @@ name: Sync routing
 
 on:
   schedule:
-    - cron: "17 */6 * * *"   # every 6 hours
-  workflow_dispatch:          # lets you run it by hand from the Actions tab
+    - cron: "17 */6 * * *" # every 6 hours
+  workflow_dispatch: # lets you run it by hand from the Actions tab
 
 permissions:
   contents: write
@@ -19,8 +19,8 @@ jobs:
           set -euo pipefail
           mkdir -p HAPP
           curl -fsSL https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/refs/heads/main/HAPP/DEFAULT.JSON \
-            | jq '.RemoteDNSDomain = "https://9.9.9.9/dns-query"
-                  | .RemoteDNSIP = "9.9.9.9"
+            | jq '.RemoteDNSDomain = "https://1.1.1.1/dns-query"
+                  | .RemoteDNSIP = "1.1.1.1"
                   | .LastUpdated = (.LastUpdated | tonumber + 1)' \
             > HAPP/DEFAULT.JSON
           printf 'happ://routing/add/%s' "$(base64 -w0 HAPP/DEFAULT.JSON)" > HAPP/DEFAULT.DEEPLINK
